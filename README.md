@@ -163,3 +163,141 @@ al., 2020).
 
 > **Dennis, A., Wixom, B. H., & Tegarden, D. (2020).**  
 > *Systems Analysis and Design: An Object-Oriented Approach with UML* (6th ed.). Wiley.
+>
+> ### 1. Use Case Diagram
+
+```mermaid
+flowchart LR
+    Student([Student])
+    Faculty([Faculty Coordinator])
+    Admin([Administrator])
+    DeptHead([Department Head])
+
+    subgraph SCEAMS["Smart Campus Event & Attendance Management System"]
+        UC1((Register / Login))
+        UC2((View Events))
+        UC3((Register for Event))
+        UC4((View Participation History))
+        UC5((Receive Notifications))
+        UC6((Get AI Recommendations))
+        UC7((Create / Schedule Event))
+        UC8((Approve Registrations))
+        UC9((Track Attendance - QR))
+        UC10((Generate Reports))
+        UC11((Manage Users and Roles))
+        UC12((View Analytics Dashboard))
+    end
+
+    Student --> UC1
+    Student --> UC2
+    Student --> UC3
+    Student --> UC4
+    Student --> UC5
+    Student --> UC6
+
+    Faculty --> UC1
+    Faculty --> UC7
+    Faculty --> UC8
+    Faculty --> UC9
+
+    Admin --> UC1
+    Admin --> UC7
+    Admin --> UC10
+    Admin --> UC11
+    Admin --> UC12
+
+    DeptHead --> UC1
+    DeptHead --> UC10
+    DeptHead --> UC12
+```
+
+### 2. System Architecture Diagram
+
+```mermaid
+flowchart TB
+    subgraph Client["Client Layer"]
+        WebApp["Student / Admin Web Portal"]
+        MobileApp["Mobile App (future)"]
+    end
+
+    subgraph Backend["Application / Backend Layer"]
+        AuthService["Authentication & Role Management Service"]
+        EventService["Event Management Service"]
+        RegistrationService["Registration & Attendance Service"]
+        RecommendationService["AI Recommendation Engine (V2)"]
+        NotificationService["Notification Service"]
+        AnalyticsService["Analytics & Reporting Service"]
+    end
+
+    subgraph Data["Data Layer"]
+        DB[("Relational Database - Users, Events, Attendance")]
+        Cache[("Cache / Session Store")]
+    end
+
+    subgraph External["External Services"]
+        EmailAPI["Email / SMS API"]
+        AIAPI["Third-Party AI / ML API"]
+        QR["QR Code Service"]
+    end
+
+    WebApp --> AuthService
+    MobileApp --> AuthService
+    WebApp --> EventService
+    WebApp --> RegistrationService
+    WebApp --> AnalyticsService
+
+    AuthService --> DB
+    EventService --> DB
+    RegistrationService --> DB
+    RecommendationService --> DB
+    AnalyticsService --> DB
+    AuthService --> Cache
+
+    RegistrationService --> QR
+    NotificationService --> EmailAPI
+    RecommendationService --> AIAPI
+
+    EventService --> NotificationService
+    RegistrationService --> NotificationService
+    RegistrationService --> RecommendationService
+```
+
+### 3. Development Roadmap / Forward Work Plan
+
+```mermaid
+flowchart LR
+    subgraph V1["Version 1 - Core Event Management"]
+        direction TB
+        V1a["User Auth & Roles"]
+        V1b["Event Creation & Scheduling"]
+        V1c["Student Registration"]
+        V1d["Basic Attendance Tracking"]
+        V1e["Event Dashboard & Search"]
+        V1Test["Testing: Login, Registration, Event Creation, Attendance, DB Integration"]
+        V1a --> V1b --> V1c --> V1d --> V1e --> V1Test
+    end
+
+    subgraph V2["Version 2 - Intelligent Automation & Analytics"]
+        direction TB
+        V2a["AI Recommendation Engine"]
+        V2b["Automated Notifications"]
+        V2c["Analytics & Reporting Dashboard"]
+        V2d["Participation Trend Analysis"]
+        V2e["QR-based Attendance Verification"]
+        V2Test["Testing: Recommendation Accuracy, Notification Delivery, QR Validation, Performance, Security & API"]
+        V2a --> V2b --> V2c --> V2d --> V2e --> V2Test
+    end
+
+    subgraph Future["Future Enhancements"]
+        F1["Native Mobile App"]
+        F2["Advanced ML Personalization"]
+        F3["Multi-Campus Support"]
+        F4["LMS Integration - Canvas / Moodle"]
+    end
+
+    V1 --> V2
+    V2 --> Future
+```
+
+---
+
