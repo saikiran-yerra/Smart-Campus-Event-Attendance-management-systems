@@ -156,8 +156,10 @@ project demonstrates meaningful incremental development through two clearly defi
 each introducing substantial new functionality. The proposal also reflects awareness of testing
 complexity, project risks, AI-assisted features, and software engineering best practices (Dennis et
 al., 2020).
-# Reference
+##  References
 
-Ricci, F., Rokach, L., & Shapira, B. (2022). Recommender systems handbook (3rd ed.).
-Springer.
-Dennis, A., Wixom, B. H., & Tegarden, D. (2020). Systems analysis and design: An objectoriented approach with UML (6th ed.). Wiley.
+> **Ricci, F., Rokach, L., & Shapira, B. (2022).**  
+> *Recommender Systems Handbook* (3rd ed.). Springer.
+
+> **Dennis, A., Wixom, B. H., & Tegarden, D. (2020).**  
+> *Systems Analysis and Design: An Object-Oriented Approach with UML* (6th ed.). Wiley.
