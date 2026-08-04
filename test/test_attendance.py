@@ -2,44 +2,31 @@ import unittest
 
 from backend.app import app
 
+
 class TestAttendance(unittest.TestCase):
 
-```
-def setUp(self):
+    def setUp(self):
+        self.client = app.test_client()
 
-    self.client = app.test_client()
+    def test_mark_attendance(self):
 
+        response = self.client.post(
+            "/attendance",
+            json={
+                "student_id": 1,
+                "event_id": 1,
+                "status": "Present"
+            }
+        )
 
-def test_mark_attendance(self):
+        self.assertEqual(response.status_code, 200)
 
-    response = self.client.post(
+    def test_get_attendance(self):
 
-        "/attendance",
+        response = self.client.get("/attendance")
 
-        json={
-
-            "student_id": 1,
-
-            "event_id": 1,
-
-            "status": "Present"
-
-        }
-
-    )
-
-    self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
 
 
-def test_get_attendance(self):
-
-    response = self.client.get("/attendance")
-
-    self.assertEqual(response.status_code, 200)
-```
-
-if **name** == "**main**":
-
-```
-unittest.main()
-```
+if __name__ == "__main__":
+    unittest.main()

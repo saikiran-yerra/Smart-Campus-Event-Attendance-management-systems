@@ -1,9 +1,14 @@
-class Attendance:
+from flask import Blueprint, request, jsonify
 
-    def __init__(self, student_id, event_id, status):
+attendance_bp = Blueprint("attendance", __name__)
 
-        self.student_id = student_id
 
-        self.event_id = event_id
+@attendance_bp.route("/attendance", methods=["POST"])
+def add_attendance():
 
-        self.status = status
+    data = request.json
+
+    return jsonify({
+        "message": "Attendance recorded successfully",
+        "attendance": data
+    })

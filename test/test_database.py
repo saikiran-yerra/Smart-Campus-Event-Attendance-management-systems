@@ -1,21 +1,18 @@
 import unittest
 
-from backend.utils.database import get_connection
+from backend.database import get_connection
+
 
 class TestDatabase(unittest.TestCase):
 
-```
-def test_connection(self):
+    def test_connection(self):
 
-    connection = get_connection()
+        connection = get_connection()
 
-    self.assertIsNotNone(connection)
+        self.assertIsNotNone(connection)
 
-    connection.close()
-```
+        connection.close()
 
-if **name** == "**main**":
 
-```
-unittest.main()
-```
+if __name__ == "__main__":
+    unittest.main()

@@ -2,44 +2,31 @@ import unittest
 
 from backend.app import app
 
+
 class TestEvents(unittest.TestCase):
 
-```
-def setUp(self):
+    def setUp(self):
+        self.client = app.test_client()
 
-    self.client = app.test_client()
+    def test_create_event(self):
 
+        response = self.client.post(
+            "/events",
+            json={
+                "event_name": "Tech Fest",
+                "event_date": "2026-08-10",
+                "location": "Auditorium"
+            }
+        )
 
-def test_create_event(self):
+        self.assertEqual(response.status_code, 200)
 
-    response = self.client.post(
+    def test_get_events(self):
 
-        "/events",
+        response = self.client.get("/events")
 
-        json={
-
-            "event_name": "Tech Fest",
-
-            "event_date": "2026-08-10",
-
-            "location": "Auditorium"
-
-        }
-
-    )
-
-    self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
 
 
-def test_get_events(self):
-
-    response = self.client.get("/events")
-
-    self.assertEqual(response.status_code, 200)
-```
-
-if **name** == "**main**":
-
-```
-unittest.main()
-```
+if __name__ == "__main__":
+    unittest.main()
