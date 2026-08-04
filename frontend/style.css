@@ -1,0 +1,39 @@
+body {
+
+    font-family: Arial;
+
+    margin: 20px;
+
+}
+
+h1 {
+
+    color: navy;
+
+}
+
+table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+}
+
+table, th, td {
+
+    border: 1px solid black;
+
+}
+
+th, td {
+
+    padding: 10px;
+
+}
+
+button {
+
+    padding: 10px;
+
+}
