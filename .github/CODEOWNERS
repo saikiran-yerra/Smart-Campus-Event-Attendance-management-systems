@@ -1,0 +1,18 @@
+# CODEOWNERS
+
+# Backend and API modules
+/backend/ @saikiran-yerra # [TODO: Add backend team member @handle]
+/api/ @saikiran-yerra # [TODO: Add backend team member @handle]
+
+# Frontend module
+/frontend/ @saikiran-yerra # [TODO: Add frontend team member @handle]
+
+# AI/ML recommendation engine
+/ai_recommendation/ @saikiran-yerra # [TODO: Add ML engineer @handle]
+
+# Documentation and markdown files
+/docs/ @saikiran-yerra # [TODO: Add technical writer or lead @handle]
+*.md @saikiran-yerra # [TODO: Add technical writer or lead @handle]
+
+# Repository owner (fallback for files not covered above)
+* @saikiran-yerra
