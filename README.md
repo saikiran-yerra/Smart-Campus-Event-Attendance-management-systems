@@ -150,8 +150,23 @@ source venv/bin/activate
 ### Install dependencies
 
 ```bash
-pip install -r requirements.txt
+pip install -r backend/requirements.txt
+pip install -r ai_recommendation/requirements.txt
 ```
+
+---
+
+## Environment Variables
+
+The application requires environment variables for database and Flask configuration. See [.env.example](.env.example) for a complete list of required variables.
+
+Create a `.env` file in the project root with your configuration:
+
+```bash
+cp .env.example .env
+```
+
+Edit `.env` with your actual values (database credentials, Flask secret key, etc.). The `.env` file is automatically excluded from version control.
 
 ---
 
