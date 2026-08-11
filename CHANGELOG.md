@@ -68,3 +68,16 @@ When releasing a new version:
 1. Update this CHANGELOG.md with an entry for the new version
 2. Create an annotated git tag: `git tag -a vX.Y.Z -m "Release message"`
 3. Push the tag to the repository: `git push origin vX.Y.Z`
+
+---
+
+## Releases
+
+Official releases follow the versioning convention and are marked with Git tags.
+
+**Current Release:** [v0.1.0](https://github.com/saikiran-yerra/Smart-Campus-Event-Attendance-management-systems/releases/tag/v0.1.0)
+
+All released versions are listed on the [Releases page](https://github.com/saikiran-yerra/Smart-Campus-Event-Attendance-management-systems/releases) with release notes and downloadable artifacts.
+
+To reference a specific release, use the tag name in the format: `vMAJOR.MINOR.PATCH`
+Example: `git checkout v0.1.0`
