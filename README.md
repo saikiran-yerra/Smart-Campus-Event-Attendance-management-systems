@@ -51,6 +51,12 @@ The project also includes an AI-powered recommendation engine that suggests even
 
 ---
 
+## Architecture
+
+For a detailed overview of the system architecture, including service boundaries, data flow, and component interactions, see [architecture.md](docs/architecture.md).
+
+---
+
 ## Project Structure
 
 smart-campus-system/
@@ -65,9 +71,9 @@ smart-campus-system/
 
 ├── ai-recommendation/
 
-├── documentation/
+├── docs/
 
-├── tests/
+├── test/
 
 ├── config/
 
@@ -216,13 +222,13 @@ GET /api/recommendations/{student_id}
 Run all tests:
 
 ```bash
-python -m unittest discover tests
+python -m unittest discover -s test -p "test_*.py"
 ```
 
 Run a single test:
 
 ```bash
-python -m unittest tests/test_auth.py
+python -m unittest test.test_auth
 ```
 
 ---
