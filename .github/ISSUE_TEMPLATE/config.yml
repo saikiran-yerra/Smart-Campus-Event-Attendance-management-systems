@@ -1,0 +1,9 @@
+# Disable blank issues and require users to use templates
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://github.com/saikiran-yerra/smart-campus-system/tree/main/docs
+    about: Check our documentation for answers and guidance
+  - name: Discussions
+    url: https://github.com/saikiran-yerra/smart-campus-system/discussions
+    about: Start a discussion for questions and ideas
