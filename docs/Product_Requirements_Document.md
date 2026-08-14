@@ -1,229 +1,418 @@
-# Product Requirements Document (PRD)
+# Product Requirements Document
 
-## 1. Scope and evidence basis
-
-This document is based on the repository evidence in README.md, backend/, api/, config/, ai_recommendation/, frontend/, database/, docs/, test/, .github/workflows/, and the authoritative risk register supplied in the project brief. Where the repository does not provide evidence of a capability, requirement, or control, the status is marked as "To Be Completed."
+## Smart Campus Event & Attendance Management System
 
 ---
 
-## 2. Level-1 and Level-2 capabilities
+## Cover Page
 
-### 1. Authenticate and authorize users
-
-#### 1.1 Register a user
-- Status: Implemented in current code.
-- Evidence: backend/routes/auth.py defines POST /register and echoes the submitted user data.
-
-#### 1.2 Authenticate credentials
-- Status: Implemented in current code.
-- Evidence: backend/routes/auth.py defines POST /login and checks hardcoded admin credentials.
-
-#### 1.3 Enforce role-based access control
-- Status: Planned / To Be Completed.
-- Evidence: README.md claims role-based access control, but the repository does not show a real role enforcement mechanism beyond a role field in payloads.
-
-#### 1.4 Audit login and access events
-- Status: Planned / To Be Completed.
-- Evidence: no audit logging or event trail is implemented in the repository.
-
-### 2. Manage event lifecycle
-
-#### 2.1 Create an event
-- Status: Implemented in current code.
-- Evidence: backend/routes/events.py defines POST /events and appends to an in-memory list.
-
-#### 2.2 View events
-- Status: Implemented in current code.
-- Evidence: backend/routes/events.py defines GET /events.
-
-#### 2.3 Update an event
-- Status: Planned / To Be Completed.
-- Evidence: README.md advertises update events, but no route is registered in the running Flask app.
-
-#### 2.4 Delete an event
-- Status: Planned / To Be Completed.
-- Evidence: README.md advertises delete events, but no working route is registered in the running Flask app.
-
-### 3. Manage registrations and capacity
-
-#### 3.1 Register a student to an event
-- Status: Planned / To Be Completed.
-- Evidence: frontend and README describe event registration, but the current event registration flow is not implemented as a real capacity-aware registration feature.
-
-#### 3.2 Validate event capacity
-- Status: Planned / To Be Completed.
-- Evidence: README.md and the risk register reference capacity constraints, but no capacity validation logic is present in the current source.
-
-#### 3.3 Notify users when an event is full or waitlisted
-- Status: Planned / To Be Completed.
-- Evidence: no waitlist or overbooking logic is present in the repository.
-
-### 4. Record attendance
-
-#### 4.1 Mark attendance for a student
-- Status: Implemented in current code.
-- Evidence: backend/routes/attendance.py defines POST /attendance and echoes the submitted data.
-
-#### 4.2 View attendance reports
-- Status: Implemented in current code.
-- Evidence: backend/routes/attendance.py defines GET /attendance and returns a static list sample.
-
-#### 4.3 Validate QR-based attendance
-- Status: Planned / To Be Completed.
-- Evidence: README.md claims QR code attendance verification, but no QR route or QR validation logic is present in backend/, api/, or frontend/.
-
-### 5. Notify users
-
-#### 5.1 Send email or SMS notifications
-- Status: Partial / stubbed implementation.
-- Evidence: backend/routes/notifications.py returns a canned success response for POST /notify, and backend/email_service.py exists but is not actually called from the route.
-
-#### 5.2 Retry or log failed delivery
-- Status: Planned / To Be Completed.
-- Evidence: no retry, log, or delivery-status mechanism is implemented.
-
-### 6. Generate recommendations
-
-#### 6.1 Train the recommendation model
-- Status: Implemented in current code.
-- Evidence: ai_recommendation/train_model.py and model training scripts exist and can generate model.pkl.
-
-#### 6.2 Recommend events to a student based on interests
-- Status: Implemented in current code.
-- Evidence: ai_recommendation/recommendation_engine.py and corresponding tests exercise interest-based recommendations.
-
-### 7. Maintain data and system availability
-
-#### 7.1 Persist application data in a database
-- Status: Partial / dependent on local environment setup.
-- Evidence: database/ SQL files and backend/database.py exist, but the repository’s setup instructions and actual test execution show database schema and configuration issues.
-
-#### 7.2 Recover from database or service interruption
-- Status: Planned / To Be Completed.
-- Evidence: no backup, replication, failover, or recovery process is implemented in the repository.
-
-#### 7.3 Monitor service health and application state
-- Status: Planned / To Be Completed.
-- Evidence: no health check endpoints, monitoring, or alerting logic are present.
+- Project Name: Smart Campus Event & Attendance Management System
+- Student(s): Sai Kiran Yerramaneni
+- Course: CISC 593/594
+- Semester: To Be Completed
+- Repository URL: https://github.com/saikiran-yerra/smart-campus-Event-Attendance-Management-System.git
+- Current Branch: main
+- Current Commit SHA: cffa152c1d8a016282a57fde720b948720516cd7
+- Current Release Version: Version 1 / Version 2 roadmap; exact release numbers To Be Completed
+- Document Version: 0.1
+- Last Updated: 2026-07-21
 
 ---
 
-## 3. Undesirable events
+## Revision History
 
-The following undesirable events are derived from the authoritative risk register and traced to the corresponding Level-2 capability.
-
-| Risk ID | Undesirable Event | Level-2 capability |
-| --- | --- | --- |
-| R4 | Unauthorized access | 1.2 Authenticate credentials / 1.3 Enforce role-based access control |
-| R5 | Registration exceeds capacity | 3.2 Validate event capacity |
-| R8 | Database unavailable | 7.1 Persist application data in a database |
-| R6 | Notification failure | 5.1 Send email or SMS notifications |
-| R7 | QR scan failure | 4.3 Validate QR-based attendance |
-
-Additional undesirable events identified from repository evidence:
-
-| ID | Undesirable Event | Level-2 capability |
-| --- | --- | --- |
-| U1 | Password disclosure in API responses | 1.1 Register a user |
-| U2 | Unhandled malformed input causes 500 errors | 1.2 Authenticate credentials / 5.1 Send email or SMS notifications |
-| U3 | Schema setup does not reliably produce the expected tables | 7.1 Persist application data in a database |
+| Version | Date | Git Commit | Description | Author |
+|----------|------|------------|-------------|--------|
+| 0.1 | 2026-07-21 | cffa152c1d8a016282a57fde720b948720516cd7 | Initial PRD drafted from the repository proposal, README, and prompt requirements | Sai Kiran Yerramaneni |
 
 ---
 
-## 4. Risks
+## Table of Contents
 
-These risks are reproduced from the authoritative register exactly, ordered highest to lowest by Risk Score.
-
-| Risk ID | Undesirable Event | Likelihood | Consequence | Risk Score | Likelihood Justification | Consequence Justification | Mitigation | Q1 (Desired) | Q2 (Preventative) | Q3 (Responsive/Recovery) | Mitigation Type | Classification Justification |
-| --- | --- | ---: | ---: | ---: | --- | --- | --- | --- | --- | --- | --- | --- |
-| R4 | Unauthorized access | 4 | 5 | 20 | Weak credentials | Data breach | MFA, RBAC, encryption | Authenticate authorized users | Reject invalid access | Lock account & notify | Pure Software | MFA/RBAC/encryption are software-enforced controls without a hardware prerequisite. |
-| R5 | Registration exceeds capacity | 3 | 4 | 12 | Popular events | Overbooking | Capacity validation | Register if seats available | Block full events | Waitlist | Pure Software | Capacity validation and waitlist logic are code-driven workflow controls, not hardware dependency. |
-| R8 | Database unavailable | 2 | 5 | 10 | Server outage | Service interruption | Replication/failover | Keep DB available | Prevent corruption | Failover | Hybrid | Replication/failover depends on infrastructure and software together, not hardware alone. |
-| R6 | Notification failure | 3 | 3 | 9 | Service outage | Missed alerts | Retry & backup | Send notifications | Don't mark failed delivery | Retry/log | Pure Software | Retry logic, logging, and backup delivery are software-controlled behaviors. |
-| R7 | QR scan failure | 2 | 4 | 8 | Damaged QR | Wrong attendance | Manual override | Scan QR | Reject invalid QR | Manual attendance | Hybrid | Manual override requires a human process step in addition to software validation. |
-
----
-
-## 5. Functional requirements (ABC format)
-
-The following requirements use the Actor-Behavior-Constraint format. IDs FR4.1, FR4.2, FR5.1, FR6.1, FR7.1, and FR8.1 are preserved exactly as required from the authoritative risk register.
-
-### Authentication and access control
-
-- FR4.1: The user shall authenticate with authorized credentials within the system’s security constraints to access the protected campus system features.
-- FR4.2: The user shall be limited by role-based access control within the security policy to prevent unauthorized actions.
-- FR1.1: The student or administrator shall register with a valid user payload within the required fields and role information to create an account.
-- FR1.2: The student or administrator shall log in with valid credentials within the authentication rules to access the application.
-
-### Event registration and capacity management
-
-- FR5.1: The user shall register for an event only when capacity is available within the event’s seat limit to prevent overbooking.
-- FR2.1: The administrator shall create an event with valid event details within the system’s required data model.
-- FR2.2: The user shall view the list of available events within the application to select an event.
-- FR2.3: The administrator shall update an event within the defined event model when the event record changes.
-- FR2.4: The administrator shall delete an event within the allowed lifecycle rules when the event is removed.
-
-### Attendance and QR tracking
-
-- FR7.1: The user shall scan a valid QR code within the attendance verification process to record attendance.
-- FR4.3: The system shall mark attendance for a student within the valid attendance record constraints to record participation.
-- FR4.4: The user shall retrieve an attendance report within the system’s access policy to review participation history.
-
-### Notifications and service availability
-
-- FR6.1: The system shall send a notification to the specified recipient within the configured delivery pipeline to communicate event or status information.
-- FR6.2: The system shall retry or log failed notification delivery within the reliability requirements to avoid silent loss of alerts.
-
-### Data persistence and recovery
-
-- FR8.1: The system shall maintain data availability within the configured database architecture to avoid service interruption.
-- FR8.2: The system shall recover or restore service after a database failure within the recovery process requirements to resume operation.
-- FR8.3: The system shall validate database setup and schema integrity within the repository’s documented process to ensure required data tables exist.
-
-### Recommendation capability
-
-- FR9.1: The AI engine shall train a recommendation model from the provided dataset within the project’s training process.
-- FR9.2: The system shall generate an event recommendation for a student based on their interests within the model’s supported inputs.
+1. Product Vision
+2. Product Scope
+3. Software Capabilities
+4. Undesirable Events
+5. Risk Analysis
+6. Risk Prioritization
+7. Risk Mitigation
+8. Functional Requirements
+9. Quality Requirements
+10. Performance Requirements
+11. Assumptions
+12. Constraints
+13. External Interfaces
 
 ---
 
-## 6. Quality and performance requirements
+# 1. Product Vision
 
-The following quality and performance requirements are measurable only. Unsupported values are marked as "To Be Completed."
+## Problem Statement
 
-| Requirement ID | Requirement | Threshold / Measure |
-| --- | --- | --- |
-| QP-01 | Authentication response time for valid logins | To Be Completed. |
-| QP-02 | Event registration must reject attempts that exceed capacity | To Be Completed. |
-| QP-03 | Notification delivery status must be retriable and auditable | To Be Completed. |
-| QP-04 | QR attendance validation must reject invalid scans before recording attendance | To Be Completed. |
-| QP-05 | Database recovery process must restore service after outage | To Be Completed. |
-| QP-06 | Model training must complete successfully with the repository dataset | To Be Completed. |
-| QP-07 | The Python AST validation pass must succeed across all repository Python source files | To Be Completed. |
+Educational institutions often rely on spreadsheets, paper attendance sheets, or standalone tools to organize workshops, seminars, technical events, and student activities. These approaches can create scheduling conflicts, inaccurate attendance tracking, ineffective communication, and reduced student involvement.
+
+## Intended Users
+
+The repository proposal identifies the following users:
+
+- College administrators
+- Faculty event coordinators
+- Students
+- Department heads
+
+## Stakeholders
+
+The primary stakeholders reflected in the repository are:
+
+- Institution administrators
+- Faculty coordinators
+- Students
+- Department leadership
+- Repository maintainers and course instructors
+
+## Product Goals
+
+The system is intended to:
+
+- Provide a centralized platform for campus event planning and coordination
+- Support online event registration
+- Track attendance reliably
+- Improve communication through notifications and reminders
+- Support event participation history and reporting
+- Introduce intelligent recommendations in later development
+
+## Major Features
+
+The repository documents the following major features:
+
+- User authentication and role management
+- Event creation and scheduling
+- Student event registration
+- Attendance tracking
+- Event dashboard and search
+- Notifications and reminders
+- AI-powered event recommendations in later versions
+- Analytics and reporting
+
+## Planned Software Versions
+
+- Version 1: Core Event Management System
+- Version 2: Intelligent Automation and Analytics
+- Future enhancements: native mobile app, advanced ML personalization, multi-campus support, LMS integration
 
 ---
 
-## 7. Revision history
+# 2. Product Scope
 
-| Date | Version | Author | Summary |
-| --- | --- | --- | --- |
-| 2026-08-13 | v0.1 | Senior SQA / Product Analyst | Initial PRD generated from repository evidence and the authoritative risk register; includes Level-1/Level-2 capabilities, risks, requirements, and quality constraints. |
+## Included Functionality
+
+The repository explicitly supports the following scope:
+
+- User registration and login
+- Role-based access for administrators, faculty, students, and department heads
+- Event creation, scheduling, and dashboard display
+- Event search and viewing
+- Student registration for events
+- Basic attendance tracking
+- Participation history viewing
+- Notifications and reminders
+- Event recommendations in later versions
+- Attendance and participation reporting
+
+## Excluded Functionality
+
+The repository does not define the following as part of the initial scope:
+
+- A native mobile application
+- Advanced machine-learning personalization beyond the planned recommendation module
+- Multi-campus support
+- LMS integration such as Canvas or Moodle
+
+## Future Enhancements
+
+The repository identifies the following future enhancements:
+
+- Native mobile app
+- Advanced ML personalization
+- Multi-campus support
+- LMS integration
 
 ---
 
-## 8. Implementation status summary
+# 3. Software Capabilities
 
-| Capability | Current status |
-| --- | --- |
-| User authentication | Partially implemented |
-| Role-based access control | Planned / To Be Completed |
-| Event creation/viewing | Implemented |
-| Event update/delete | Planned / To Be Completed |
-| Event capacity control | Planned / To Be Completed |
-| Attendance recording/reporting | Partially implemented |
-| QR-based attendance | Planned / To Be Completed |
-| Notification dispatch | Stubbed / partial |
-| Recommendation model training and inference | Implemented |
-| Database persistence and recovery | Partial / To Be Completed |
+## 3.1 Level-1 Capabilities
 
-This PRD is intentionally conservative. It reflects only the repository evidence available at the time of authoring and the authoritative risk register supplied for this project.
+The repository supports the following major capabilities:
+
+1. Manage Users and Roles
+2. Manage Events
+3. Manage Registrations
+4. Track Attendance
+5. Notify Users
+6. Recommend Events
+7. Generate Reports and Analytics
+
+## 3.2 Level-2 Capabilities
+
+### 1. Manage Users and Roles
+
+1.1 Register User
+
+1.2 Authenticate User
+
+1.3 Manage User Roles
+
+### 2. Manage Events
+
+2.1 Create Event
+
+2.2 Update Event
+
+2.3 Search Events
+
+2.4 View Event Dashboard
+
+### 3. Manage Registrations
+
+3.1 Register for Event
+
+3.2 Approve Registration
+
+3.3 View Participation History
+
+### 4. Track Attendance
+
+4.1 Record Attendance
+
+4.2 Verify Attendance with QR
+
+### 5. Notify Users
+
+5.1 Send Event Notifications
+
+5.2 Send Reminders
+
+### 6. Recommend Events
+
+6.1 Generate Recommendations
+
+### 7. Generate Reports and Analytics
+
+7.1 Generate Attendance Reports
+
+7.2 Analyze Participation Trends
+
+7.3 View Analytics Dashboard
+
+---
+
+# 4. Undesirable Events
+
+| UE ID | Level-2 Capability | Undesirable Event |
+|-------|--------------------|-------------------|
+| UE-1.1-01 | Register User | Duplicate or conflicting user account is created |
+| UE-1.2-01 | Authenticate User | Unauthorized user gains access to the system |
+| UE-1.3-01 | Manage User Roles | A user is assigned an incorrect role |
+| UE-2.1-01 | Create Event | An event is created with incomplete or inconsistent information |
+| UE-2.2-01 | Update Event | An event update is not applied consistently across the system |
+| UE-2.3-01 | Search Events | Users cannot find relevant events through the search experience |
+| UE-2.4-01 | View Event Dashboard | The dashboard displays outdated or inaccurate event information |
+| UE-3.1-01 | Register for Event | A student registers beyond the event capacity |
+| UE-3.2-01 | Approve Registration | Registration approval is delayed or applied inconsistently |
+| UE-3.3-01 | View Participation History | A student’s participation history is inaccurate or missing |
+| UE-4.1-01 | Record Attendance | Attendance is recorded incorrectly for an event |
+| UE-4.2-01 | Verify Attendance with QR | QR-based attendance verification is bypassed or misread |
+| UE-5.1-01 | Send Event Notifications | An event notification is not delivered to the intended user |
+| UE-5.2-01 | Send Reminders | A reminder is sent too late or not at all |
+| UE-6.1-01 | Generate Recommendations | Recommendations are irrelevant or inaccurate for a student |
+| UE-7.1-01 | Generate Attendance Reports | An attendance report contains incorrect or incomplete data |
+| UE-7.2-01 | Analyze Participation Trends | Trend analysis is misleading because underlying data is incomplete |
+| UE-7.3-01 | View Analytics Dashboard | The analytics dashboard is unavailable or not updated |
+
+---
+
+# 5. Risk Analysis
+
+| UE ID | Risk Statement | Likelihood | Impact | Risk Score |
+|-------|----------------|------------|--------|------------|
+| UE-3.1-01 | Over-capacity registration may create inaccurate attendance and event management outcomes | 3 | 4 | 12 |
+| UE-4.1-01 | Incorrect attendance recording may undermine trust in the system and reporting | 3 | 4 | 12 |
+| UE-4.2-01 | QR verification failure may allow fraudulent or inaccurate attendance results | 3 | 4 | 12 |
+| UE-6.1-01 | Poor recommendations may reduce student engagement and make the smart feature ineffective | 4 | 3 | 12 |
+| UE-7.1-01 | Incorrect reporting may lead to poor decisions by administrators or department heads | 3 | 4 | 12 |
+| UE-1.2-01 | Unauthorized access may expose sensitive information and compromise system integrity | 2 | 5 | 10 |
+| UE-1.3-01 | Incorrect role assignment may grant or deny access inappropriately | 2 | 4 | 8 |
+| UE-2.1-01 | Incomplete event data may reduce the usefulness of the event management workflow | 3 | 3 | 9 |
+| UE-2.4-01 | Inaccurate dashboard content may mislead users about current scheduling information | 3 | 3 | 9 |
+| UE-3.3-01 | Inaccurate participation history may reduce trust in student engagement records | 3 | 3 | 9 |
+| UE-5.1-01 | Notification failure may reduce communication effectiveness and participation | 3 | 3 | 9 |
+| UE-5.2-01 | Reminder failure may cause missed registration deadlines or low attendance | 3 | 3 | 9 |
+| UE-7.2-01 | Misleading trend analysis may cause incorrect institutional decisions | 3 | 3 | 9 |
+| UE-1.1-01 | Duplicate accounts may create confusion and inconsistent user records | 2 | 3 | 6 |
+| UE-2.2-01 | Inconsistent event updates may leave users with conflicting event information | 2 | 3 | 6 |
+| UE-2.3-01 | Search failure may prevent users from finding relevant events | 3 | 2 | 6 |
+| UE-3.2-01 | Inconsistent approvals may create unfair or delayed registration outcomes | 2 | 3 | 6 |
+| UE-7.3-01 | Dashboard unavailability may limit reporting and analysis for stakeholders | 2 | 3 | 6 |
+
+---
+
+# 6. Risk Prioritization
+
+| Priority | UE ID | Risk Score |
+|----------|-------|------------|
+| 1 | UE-3.1-01 | 12 |
+| 2 | UE-4.1-01 | 12 |
+| 3 | UE-4.2-01 | 12 |
+| 4 | UE-6.1-01 | 12 |
+| 5 | UE-7.1-01 | 12 |
+| 6 | UE-1.2-01 | 10 |
+| 7 | UE-1.3-01 | 8 |
+| 8 | UE-2.1-01 | 9 |
+| 9 | UE-2.4-01 | 9 |
+| 10 | UE-3.3-01 | 9 |
+| 11 | UE-5.1-01 | 9 |
+| 12 | UE-5.2-01 | 9 |
+| 13 | UE-7.2-01 | 9 |
+| 14 | UE-1.1-01 | 6 |
+| 15 | UE-2.2-01 | 6 |
+| 16 | UE-2.3-01 | 6 |
+| 17 | UE-3.2-01 | 6 |
+| 18 | UE-7.3-01 | 6 |
+
+---
+
+# 7. Risk Mitigation
+
+| UE ID | Risk Mitigation | Classification |
+|-------|-----------------|----------------|
+| UE-3.1-01 | Enforce capacity checks before registration and display remaining capacity clearly | Pure Software |
+| UE-4.1-01 | Validate attendance entries, maintain audit-friendly records, and test attendance workflows | Pure Software |
+| UE-4.2-01 | Validate QR-based attendance flow with fallback handling and device checks | Hybrid (Software + Hardware) |
+| UE-6.1-01 | Start with simple recommendation logic and test recommendation quality using available participation data | Pure Software |
+| UE-7.1-01 | Cross-check report inputs against stored attendance and registration data | Pure Software |
+| UE-1.2-01 | Enforce role-based access controls and authentication checks for all sensitive actions | Pure Software |
+| UE-1.3-01 | Restrict role updates to authorized administrators and validate role changes before application | Pure Software |
+| UE-2.1-01 | Require required event fields before creation and validate field completeness | Pure Software |
+| UE-2.4-01 | Refresh dashboard data from the central data store and validate event state before display | Pure Software |
+| UE-3.3-01 | Persist participation history from registration and attendance workflows and test for consistency | Pure Software |
+| UE-5.1-01 | Use reliable notification service integration and log delivery attempts for monitoring | Pure Software |
+| UE-5.2-01 | Trigger reminder workflows from event and deadline data and monitor delivery outcomes | Pure Software |
+| UE-7.2-01 | Validate trend analysis inputs and ensure datasets are complete before reporting | Pure Software |
+| UE-1.1-01 | Prevent duplicate registration by checking existing accounts before creating a new user | Pure Software |
+| UE-2.2-01 | Apply event updates through centralized workflow logic and verify state changes | Pure Software |
+| UE-2.3-01 | Ensure search indexes and query logic cover event titles, categories, and upcoming schedules | Pure Software |
+| UE-3.2-01 | Apply approval actions through a defined workflow and track approval state consistently | Pure Software |
+| UE-7.3-01 | Maintain dashboard availability through testing, monitoring, and fail-safe display logic | Pure Software |
+
+---
+
+# 8. Functional Requirements
+
+| Requirement ID | Level-2 Capability | Functional Requirement |
+|----------------|--------------------|------------------------|
+| FR-1.1.1 | Register User | The system shall register a new user with a role within the system. |
+| FR-1.2.1 | Authenticate User | The authentication service shall authenticate a registered user within two seconds under normal operating conditions. |
+| FR-1.3.1 | Manage User Roles | The role management module shall assign or update a user’s role within the system. |
+| FR-2.1.1 | Create Event | The event management service shall create an event with a title, venue, time, category, capacity, and description. |
+| FR-2.2.1 | Update Event | The event management service shall update an existing event within the system. |
+| FR-2.3.1 | Search Events | The dashboard shall search and display events based on relevant filters and user input. |
+| FR-2.4.1 | View Event Dashboard | The dashboard shall display upcoming events for authorized users. |
+| FR-3.1.1 | Register for Event | The registration service shall allow a student to register for an event within the event capacity. |
+| FR-3.2.1 | Approve Registration | The registration service shall approve or deny registrations for an event. |
+| FR-3.3.1 | View Participation History | The system shall display a student’s participation history. |
+| FR-4.1.1 | Record Attendance | The attendance service shall record attendance for an event. |
+| FR-4.2.1 | Verify Attendance with QR | The attendance service shall verify attendance using QR-based validation. |
+| FR-5.1.1 | Send Event Notifications | The notification service shall send event notifications to users through supported communication channels. |
+| FR-5.2.1 | Send Reminders | The notification service shall send reminders before an event or registration deadline. |
+| FR-6.1.1 | Generate Recommendations | The recommendation engine shall generate event recommendations based on available user and participation data. |
+| FR-7.1.1 | Generate Attendance Reports | The reporting service shall generate attendance reports for an event or set of events. |
+| FR-7.2.1 | Analyze Participation Trends | The analytics service shall analyze participation trends for reporting purposes. |
+| FR-7.3.1 | View Analytics Dashboard | The analytics service shall present attendance and participation insights through a dashboard. |
+
+---
+
+# 9. Quality Requirements
+
+The repository does not define quantitative quality targets. The following quality requirements are therefore proposed for implementation planning and validation:
+
+- Security: The system shall enforce role-based access so that administrators, faculty coordinators, students, and department heads can only access the functions appropriate to their role.
+- Reliability: The system shall persist event, registration, attendance, and report data so that normal operations do not lose records.
+- Availability: The system shall remain available for core workflows such as login, event viewing, registration, attendance recording, and reporting during normal operating hours.
+- Maintainability: The system shall use modular services and document major changes in the repository so that future updates are manageable.
+- Scalability: The system architecture shall support the addition of new features from Version 1 to Version 2 and beyond without replacing the core event and attendance workflows.
+- Usability: The dashboard shall provide users with clear access to events, registration actions, attendance information, and reporting features.
+- Interoperability: The system shall integrate with external services for notifications, AI recommendations, and QR-based attendance support.
+- Testability: The system shall expose core workflows for verification through functional testing.
+- AI Explainability and AI Safety: These are planned for Version 2 but are not fully specified in the repository and remain To Be Completed.
+
+---
+
+# 10. Performance Requirements
+
+The repository does not define explicit numerical performance targets. The following proposed performance requirements should be validated during implementation:
+
+- Authentication and basic dashboard operations shall complete within two seconds for standard user requests.
+- Event search and event listing shall return results within two seconds for a typical dataset.
+- Attendance recording and QR verification shall complete within two seconds after the user submits the relevant action.
+- Notification dispatch shall be initiated within one minute of the triggering event or reminder condition.
+- The system shall support the planned Version 1 and Version 2 workflows without requiring a redesign of the core services.
+
+---
+
+# 11. Assumptions
+
+- The system will be developed incrementally through Version 1 and Version 2.
+- The system will provide a web-based portal for students and administrators.
+- Users will be assigned roles such as administrator, faculty coordinator, student, and department head.
+- Event data will be stored and managed centrally.
+- Notification delivery may rely on external email or SMS APIs.
+- Recommendation functionality will be introduced in later versions and may use third-party AI or machine learning services.
+- Attendance verification will use QR-based support in later planned functionality.
+- The repository will continue to be used for version control and documentation.
+
+---
+
+# 12. Constraints
+
+- The repository does not define a specific implementation language, framework, or database engine beyond the use of a relational database concept in the system architecture.
+- The repository does not define a specific operating system or deployment environment.
+- The project scope is constrained by semester-based development expectations.
+- The system depends on external services for notifications and AI recommendations.
+- The repository does not define hardware requirements beyond the general concept of QR-based attendance support.
+- The repository identifies future enhancements that are not part of the initial scope.
+
+---
+
+# 13. External Interfaces
+
+## User Interfaces
+
+- Student and administrator web portal
+- Event dashboard and search interface
+- Registration and participation history views
+- Analytics and reporting dashboard
+- Future mobile application interface
+
+## Hardware Interfaces
+
+- QR scanning or camera-enabled device support for attendance verification
+
+## Software Interfaces
+
+- Authentication and role management service
+- Event management service
+- Registration and attendance service
+- Recommendation engine
+- Notification service
+- Analytics and reporting service
+- Relational database for users, events, and attendance
+- Cache or session store
+- QR code service
+
+## Communication Interfaces
+
+- Communication between the web portal and backend services
+- Communication between backend services and the relational data store
+- Communication with external notification services such as email or SMS APIs
+- Communication with third-party AI or machine learning services for recommendations
